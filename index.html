@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepFake Sentinel - Innovative Deepfake Detection System</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif; /* Futuristic font */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Deep space gradient */
+            color: #fff;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Particle Background for Mindblowing Effect */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+        }
+
+        /* Neon Glow Effect */
+        .neon-glow {
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+            animation: neon-flicker 1.5s infinite alternate;
+        }
+
+        @keyframes neon-flicker {
+            0% { text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc; }
+            100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc; }
+        }
+
+        /* Login Page Styles */
+        #login-page {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(0, 255, 204, 0.5);
+            text-align: center;
+            width: 300px;
+            animation: fade-in 1s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #00ffcc;
+            background: transparent;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00ffcc;
+            border: none;
+            color: #0f0c29;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ffcc;
+        }
+
+        /* Dashboard/Upload Page Styles */
+        #dashboard {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        #upload-area {
+            border: 2px dashed #00ffcc;
+            padding: 40px;
+            margin: 20px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #upload-area:hover {
+            background: rgba(0, 255, 204, 0.2);
+        }
+
+        #preview {
+            max-width: 100%;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            display: none;
+        }
+
+        #loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        /* Loading Animation - Futuristic Scanner */
+        .scanner {
+            width: 200px;
+            height: 10px;
+            background: linear-gradient(to right, transparent, #00ffcc, transparent);
+            animation: scan 1.5s linear infinite;
+            border-radius: 5px;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        #result {
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            animation: result-pop 0.5s ease-in-out;
+        }
+
+        @keyframes result-pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .real { background: rgba(0, 255, 0, 0.5); } /* Green for real */
+        .fake { background: rgba(255, 0, 0, 0.5); } /* Red for fake */
+
+        /* 3D Hologram Effect for Title */
+        h1 {
+            font-size: 48px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: hologram 5s infinite alternate;
+        }
+
+        @keyframes hologram {
+            0% { transform: rotateY(-5deg) rotateX(5deg); }
+            100% { transform: rotateY(5deg) rotateX(-5deg); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script> <!-- For particle background -->
+</head>
+<body>
+    <div id="particles"></div>
+
+    <!-- Login Page -->
+    <div id="login-page">
+        <h1 class="neon-glow">DeepFake Sentinel</h1>
+        <p>Innovative Deepfake Detection System</p>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard">
+        <h1 class="neon-glow">DeepFake Detection Dashboard</h1>
+        <div id="upload-area" onclick="document.getElementById('file-input').click()">
+            <p>Click to Upload Image or Drag & Drop Here</p>
+            <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+        </div>
+        <img id="preview" alt="Image Preview">
+        <div id="loading">
+            <p>Analyzing... Please Wait</p>
+            <div class="scanner"></div>
+        </div>
+        <div id="result"></div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Initialize Particles for Background
+        particlesJS('particles', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#00ffcc' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#00ffcc', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) { // Simple check, replace with real auth in backend
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+            } else {
+                alert('Please enter username and password');
+            }
+        }
+
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('login-page').style.display = 'block';
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('preview').style.display = 'block';
+                    detectDeepfake();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function detectDeepfake() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            // Simulate detection (replace with real API call to your deepfake model backend)
+            setTimeout(() => {
+                const isFake = Math.random() > 0.5; // Random simulation
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = isFake ? 'AI-Generated (Deepfake Detected)' : 'Real Image';
+                resultDiv.className = isFake ? 'fake' : 'real';
+                resultDiv.style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+            }, 3000); // 3-second buffer for simulation
+        }
+    </script>
+</body>
+</html>
